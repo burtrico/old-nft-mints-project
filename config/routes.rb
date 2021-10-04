@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
-  resources :proposals
   resources :proposal_votes
+  resources :proposals
   resources :users
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
