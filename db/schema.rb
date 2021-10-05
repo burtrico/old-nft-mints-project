@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_10_04_215839) do
     t.bigint "proposal_id", null: false
     t.string "token"
     t.integer "count"
-    t.boolean "approve"
+    t.boolean "vote_to_approve"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["proposal_id"], name: "index_proposal_votes_on_proposal_id"
@@ -32,8 +32,6 @@ ActiveRecord::Schema.define(version: 2021_10_04_215839) do
     t.string "title"
     t.text "description"
     t.boolean "active"
-    t.integer "approve"
-    t.integer "deny"
     t.datetime "start_date"
     t.datetime "end_date"
     t.bigint "user_id", null: false

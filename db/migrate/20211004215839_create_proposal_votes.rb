@@ -5,7 +5,7 @@ class CreateProposalVotes < ActiveRecord::Migration[6.1]
       t.belongs_to :proposal, null: false, foreign_key: true
       t.string :token
       t.integer :count
-      t.boolean :approve
+      t.boolean :vote_to_approve
 
       t.timestamps
     end
