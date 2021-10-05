@@ -39,4 +39,6 @@ class ProposalsController < ApplicationController
       def proposal_params
         params.permit(:token, :title, :description, :active, :start_date, :end_date, :user)
       end
+
+      
 end
