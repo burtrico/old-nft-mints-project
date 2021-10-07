@@ -1,6 +1,6 @@
-class ProposalsController < ApplicationController
+class Api::ProposalsController < ApplicationController
     def index
-        proposals = Proposal.all.includes(:user_proposals)
+        proposals = Proposal.all.includes(:proposal_votes)
         render json: proposals, each_serializer: ProposalIndexSerializer
       end
     
@@ -37,7 +37,7 @@ class ProposalsController < ApplicationController
       private
     
       def proposal_params
-        params.permit(:token, :title, :description, :active, :start_date, :end_date, :user)
+        params.permit(:token, :title, :description, :active, :start_date, :end_date, :username)
       end
 
       

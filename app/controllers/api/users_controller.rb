@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::UsersController < ApplicationController
     def show
         if current_user
           render json: current_user, status: :ok
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       private
     
       def user_params
-        params.permit(:username, :email, :bio, :wallet_address, :password, :password_confirmation)
+        params.permit(:username, :email, :password, :password_confirmation, :wallet_address)
       end
 
 end

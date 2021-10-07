@@ -1,2 +1,0 @@
-class ProposalVotesController < ApplicationController
-end

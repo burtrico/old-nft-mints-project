@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-    has_many :proposal_votes
-    has_many :proposals, through: :proposal_votes
+    has_many :votes
+    has_many :proposals, through: :votes
 
-    validates :username, presence: true
+    validates :username, presence: true, uniqueness: true
+    has_secure_password
 end
