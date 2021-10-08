@@ -1,10 +1,10 @@
 import './App.css';
-import GroupsContainer from './components/GroupsContainer'
+// import GroupsContainer from './components/GroupsContainer'
 import ProposalsContainer from './components/ProposalsContainer'
 import { Switch, Route, NavLink, Redirect, useHistory } from 'react-router-dom'
 
 function AuthenticatedApp({ currentUser, setCurrentUser }) {
-  const history = useHistory()
+  // const history = useHistory()
   
   const handleLogout = () => {
     fetch(`/logout`, {
@@ -14,7 +14,7 @@ function AuthenticatedApp({ currentUser, setCurrentUser }) {
       .then(res => {
         if (res.ok) {
           setCurrentUser(null)
-          history.push('/')
+          // history.push('/')
         }
       })
   }
@@ -22,19 +22,20 @@ function AuthenticatedApp({ currentUser, setCurrentUser }) {
     <div className="App">
       <nav>
         <span>
-          <NavLink to="/groups">Groups</NavLink>{" - "}
-          <NavLink to="/events">Events</NavLink>
+          {/* <NavLink to="/groups">Groups</NavLink>{" - "} */}
+          <NavLink to="/proposals">: Proposals :</NavLink>
+          <NavLink to="/users">: Users :</NavLink>
         </span>
-        <span>Logged in as {currentUser.username} <button onClick={handleLogout}>Logout</button></span>
+        <span>: Current User = {"Burt"} <button onClick={handleLogout}> Logout </button></span>
       </nav>
       <Switch>
-        <Route path="/groups">
-          <GroupsContainer />
+      <Route path="/propsals">
+          <ProposalsContainer currentUser={currentUser} />
         </Route>
-        <Route path="/events">
-          <ProposalsContainer />
+        <Route path="/proposals">
+          <ProposalsContainer currentUser={currentUser} />
         </Route>
-        <Redirect to="/groups"/>
+        {/* <Redirect to="/proposals"/> */}
         {/* ^^^^ added */}
       </Switch>
     </div>

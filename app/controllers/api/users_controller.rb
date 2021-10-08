@@ -1,5 +1,11 @@
 class Api::UsersController < ApplicationController
-    def show
+      
+      def index
+        users = User.all
+        render json: users
+      end
+  
+      def show
         if current_user
           render json: current_user, status: :ok
         else
@@ -16,6 +22,8 @@ class Api::UsersController < ApplicationController
           render json: user.errors, status: :unprocessable_entity
         end
       end
+
+
     
       private
     

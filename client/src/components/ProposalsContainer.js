@@ -3,70 +3,80 @@ import { Switch, Route } from 'react-router-dom'
 import ProposalsList from './ProposalsList'
 import ProposalDetail from './ProposalDetail'
 
-function ProposalsContainer() {
+function ProposalsContainer({currentUser}) {
   const [proposals, setProposals] = useState([])
-  const [groups, setGroups] = useState([])
+  const [votePlaced, setVotePlaced] = useState(false)
+  // const [groups, setGroups] = useState([])
   
   useEffect(() => {
-    fetch(`/proposals`, {
+    fetch(`/api/proposals`, {
       credentials: 'include'
     })
       .then(res => res.json())
-      .then(proposals => setProposals(proposals))
-    fetch(`/groups`, {
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(groups => setGroups(groups))
+      .then(proposals => {
+        setProposals(proposals)
+      console.log(proposals)
+      })
+    // fetch(`/groups`, {
+    //   credentials: 'include'
+    // })
+    //   .then(res => res.json())
+    //   .then(groups => setGroups(groups))
   },[])
 
-  const removeRsvpToProposal = (proposalId) => {
-    const proposal = proposals.find(proposal => proposal.id === proposalId)
-    return fetch(`/user_proposals/${proposal.user_proposal.id}`, {
+  // const removeRsvpToProposal = (proposalId) => {
+  //   const proposal = proposals.find(proposal => proposal.id === proposalId)
+  //   return fetch(`/api/user_proposals/${proposal.user_proposal.id}`, {
+  //     method: "DELETE",
+  //     credentials: 'include'
+  //   })
+  //     .then(res => {
+  //       if (res.ok) {
+  //         // if the Proposal is the one we just removed an rsvp 
+  //         // for, set its user_Proposal property in state to 
+  //         // undefined; If not, leave the Proposal as it is
+  //         const updatedProposals = proposals.map((proposal) => {
+  //           if (proposal.id === proposalId) {
+  //             return {
+  //               ...proposal,
+  //               user_proposal: undefined
+  //             }
+  //           } else {
+  //             return proposal
+  //           }
+  //         })
+  //         setProposals(updatedProposals)
+  //       }
+  //     })
+  // }
+
+  const cancelProposal = (proposalId) => {
+    return fetch(`/api/Proposals/${proposalId}`, {
       method: "DELETE",
       credentials: 'include'
     })
       .then(res => {
         if (res.ok) {
-          // if the Proposal is the one we just removed an rsvp 
-          // for, set its user_Proposal property in state to 
-          // undefined; If not, leave the Proposal as it is
-          const updatedProposals = proposals.map((proposal) => {
-            if (proposal.id === proposalId) {
-              return {
-                ...proposal,
-                user_proposal: undefined
-              }
-            } else {
-              return proposal
-            }
-          })
+          const updatedProposals = proposals.filter(proposal => proposal.id !== proposalId)
           setProposals(updatedProposals)
         }
       })
   }
 
-  const cancelProposal = (proposalId) => {
-    return fetch(`/Proposals/${proposalId}`, {
-      method: "DELETE",
-      credentials: 'include'
-    })
-      .then(res => {
-        if (res.ok) {
-          const updatedProposals = proposals.filter(proposal => proposal.id !== ProposalId)
-          setProposals(updatedProposals)
-        }
-      })
-  }
-  const rsvpToProposal = (proposalId) => {
-    return fetch('/user_proposals', {
+  const voteYesProposal = (proposalId) => {
+    return fetch('/api/votes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'include',
       body: JSON.stringify({
-        Proposal_id: proposalId
+        user_id: currentUser.id,
+        proposal_id: proposalId,
+        // Need to change this later:
+        token: "lyra",
+        count: currentUser.count,
+        vote_to_approve: true
       })
     })
       .then(res => {
@@ -76,15 +86,61 @@ function ProposalsContainer() {
           return res.json().then(errors => Promise.reject(errors))
         }
       })
-      .then(userProposal => {
-        // if the Proposal is the one we just rsvp'd to
-        // add a user_Proposal property in state and set
+      .then(userVote => {
+        // if the Proposal is the one we just voted on,
+        // add a user_proposal property in state and set
+        // it to the userProposal; if not, leave it as is
+        // const updatedProposals = proposals.map((proposal) => {
+
+        //   if (proposal.id === proposalId) {
+        //     return {
+        //       ...proposal,
+        //       vote: userVote
+        //     }
+        //   } else {
+        //     return proposal
+        //   }
+        // })
+        console.log(userVote)
+        setVotePlaced(true)
+        // setProposals(updatedProposals)
+      })
+  }
+
+
+
+  const voteNoProposal = (proposalId) => {
+    return fetch('/api/votes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        user_id: currentUser.id,
+        proposal_id: proposalId,
+        // Need to change this later:
+        token: "lyra",
+        count: currentUser.count,
+        vote_to_approve: false
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          return res.json().then(errors => Promise.reject(errors))
+        }
+      })
+      .then(userVote => {
+        // if the Proposal is the one we just voted on,
+        // add a user_proposal property in state and set
         // it to the userProposal; if not, leave it as is
         const updatedProposals = proposals.map((proposal) => {
           if (proposal.id === proposalId) {
             return {
               ...proposal,
-              user_proposal: userProposal
+              vote: userVote
             }
           } else {
             return proposal
@@ -95,7 +151,7 @@ function ProposalsContainer() {
   }
 
   const createProposal = (formData) => {
-    return fetch("/proposals", {
+    return fetch("/api/proposals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -117,33 +173,36 @@ function ProposalsContainer() {
 
   return (
     <div>
-      <Switch>
+      {/* <Switch> */}
         <Route
           exact
-          path="/proposals"
+          path="/api/proposals"
         >
           <ProposalsList
             Proposals={proposals}
-            groups={groups}
+            currentUser={currentUser}
             cancelProposal={cancelProposal}
-            removeRsvpToProposal={removeRsvpToProposal}
-            rsvpToProposal={rsvpToProposal}
+            // removeRsvpToProposal={removeRsvpToProposal}
             createProposal={createProposal}
+            updateProposal={createProposal}
           />
         </Route>
         <Route
           exact
-          path="/proposals/:id"
+          path="/api/proposals/:id"
           render={({ match }) => {
             return <ProposalDetail
+              currentUser={currentUser}
               ProposalId={match.params.id}
+              Proposals={proposals}
               cancelProposal={cancelProposal}
-              removeRsvpToProposal={removeRsvpToProposal}
-              rsvpToProposal={rsvpToProposal}
+              voteYesProposal={voteYesProposal}
+              voteNoProposal={voteNoProposal}
+              votePlaced={votePlaced}
             />
           }}
         />
-      </Switch>
+      {/* </Switch> */}
     </div>
   )
 }

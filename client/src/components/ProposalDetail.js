@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-function ProposalDetail({ proposalId, removeRsvpToProposal, rsvpToProposal, cancelProposal }) {
+function ProposalDetail({ votePlaced, proposalId, proposals, voteYesProposal, voteNoProposal, cancelProposal, currentUser }) {
   const [proposal, setProposal] = useState(null)
-  const history = useHistory();
+  // const history = useHistory();
 
   const fetchProposalCallback = useCallback(
     () => {
-      fetch(`/proposals/${proposalId}`, {
+      fetch(`/api/proposals/${proposalId}`, {
         credentials: 'include'
       })
         .then(res => res.json())
@@ -22,8 +22,8 @@ function ProposalDetail({ proposalId, removeRsvpToProposal, rsvpToProposal, canc
   }, [fetchProposalCallback])
 
 
-  const cancelProposalButton = (Proposal) => {
-    if (Proposal.user_is_creator) {
+  const cancelProposalButton = (proposal) => {
+    if (proposal.user_is_creator) {
       return (
         <p>
           <button
@@ -35,46 +35,78 @@ function ProposalDetail({ proposalId, removeRsvpToProposal, rsvpToProposal, canc
 
   const handleCancel = (e) => {
     cancelProposal(proposal.id);
-    history.push('/proposals')
+    // history.push('/api/proposals')
   }
 
-  const rsvpButton = (proposal) => {
-    if (proposal.user_Proposal) {
-      return (
-        <button
-          onClick={() => {
-            removeRsvpToProposal(proposal.id).then(() => fetchProposalCallback())
-          }
-        }>
-          Cancel RSVP
-        </button >
-      )
+  // const find_vote = (proposal) => { 
+  //   const user_vote = proposal.votes.map( vote => vote.user_id === currentUser.id)
+  //   if (user_vote.length > 0) {true}
+  //   else {false}
+  // }
+
+  const voteYesButton = (proposal) => {
+    if (votePlaced) {
+      // return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>
+      return <p>Vote Confirmed</p>
     } else {
-      return (
-        <button
-          onClick={() => {
-            rsvpToProposal(proposal.id).then(() => fetchProposalCallback())
-          }
-        }>
-          RSVP for Proposal
-        </button>
-      )
+      return <button onClick={() => voteYesProposal(proposalId)}>Vote YES for Proposal</button>
     }
   }
+
+  const voteNoButton = (proposal) => {
+    if (votePlaced) {
+      // return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>
+      return <p>Vote Confirmed</p>
+    } else {
+      return <button onClick={() => voteNoProposal(proposalId)}>Vote NO for Proposal</button>
+    }
+  }
+
+  // const rsvpButton = (proposal) => {
+  //   if (proposal.user_proposal) {
+  //     return (
+  //       <button
+  //         onClick={() => {
+  //           removeRsvpToProposal(proposal.id).then(() => fetchProposalCallback())
+  //         }
+  //       }>
+  //         Cancel RSVP
+  //       </button >
+  //     )
+  //   } else {
+  //     return (
+  //       <button
+  //         onClick={() => {
+  //           rsvpToProposal(proposal.id).then(() => fetchProposalCallback())
+  //         }
+  //       }>
+  //         RSVP for Proposal
+  //       </button>
+  //     )
+  //   }
+  // }
   
   if(!proposal) { return <div></div>}
   return (
     <div>
       <h1>{proposal.title}</h1>
+      <p>Status: {proposal.status}</p>
       {cancelProposalButton(proposal)}
-      <small>Created by {proposal.creator} for <Link to={`/groups/${proposal.group.id}`}>{proposal.group.name}</Link></small>
+      <small>DAO: {proposal.token}</small>
+      <small>Author: {proposal.author}</small>
       <p>{proposal.description}</p>
-      <p>{proposal.time}</p>
-      <p>Location: {proposal.location}</p>
-      <p>{rsvpButton(proposal)}</p>
+      <p>Start Date: {proposal.start_date}</p>
+      <p>End Date: {proposal.end_date}</p>
+      <br/>
+      <p>Votes to Approve: {proposal.approve}</p>
+      <p>Votes to Deny: {proposal.deny}</p>
+      <br/>
+      <p>{voteYesButton(proposal)}</p>
+      <p>{voteNoButton(proposal)}</p>
+      <br/>
       <ul>
-        {proposal.attendees.map(attendee => (
-          <li>{attendee.username}</li>
+        {proposal.votes.map(vote => (
+          <li>{vote.user.username} -- {vote.vote_to_approve ? "APPROVE" : "DENY"} -- {vote.count} token votes</li>
         ))}
       </ul>
 

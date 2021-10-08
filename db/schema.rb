@@ -15,18 +15,6 @@ ActiveRecord::Schema.define(version: 2021_10_04_215839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "proposal_votes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "proposal_id", null: false
-    t.string "token"
-    t.integer "count"
-    t.boolean "vote_to_approve"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["proposal_id"], name: "index_proposal_votes_on_proposal_id"
-    t.index ["user_id"], name: "index_proposal_votes_on_user_id"
-  end
-
   create_table "proposals", force: :cascade do |t|
     t.string "token"
     t.string "title"
@@ -50,7 +38,19 @@ ActiveRecord::Schema.define(version: 2021_10_04_215839) do
     t.string "password_digest"
   end
 
-  add_foreign_key "proposal_votes", "proposals"
-  add_foreign_key "proposal_votes", "users"
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "proposal_id", null: false
+    t.string "token"
+    t.integer "count"
+    t.boolean "vote_to_approve"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["proposal_id"], name: "index_votes_on_proposal_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   add_foreign_key "proposals", "users"
+  add_foreign_key "votes", "proposals"
+  add_foreign_key "votes", "users"
 end

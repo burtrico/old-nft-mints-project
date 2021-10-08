@@ -24,11 +24,11 @@ function Signup({ setCurrentUser }) {
         if (res.ok) {
           res.json().then(user => {
             setCurrentUser(user)
-            history.push('/groups')
+            history.push('/users')
           })
         } else {
           setCurrentUser({ username: "Burt" })
-          history.push('/groups')
+          history.push('/users')
           res.json().then(errors => {
             console.error(errors)
           })

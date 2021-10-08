@@ -1,57 +1,56 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function ProposalsList({ proposals, groups, removeRsvpToProposal, cancelProposal, rsvpToProposal, createProposal }) {
+function ProposalsList({ currentUser, proposals, cancelProposal, createProposal, updateProposal }) {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  const [token, setToken] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [location, setLocation] = useState('')
+  // const [location, setLocation] = useState('')
   const [startTime, setStartTime] = useState(now.toISOString().slice(0, 16))
   const [endTime, setEndTime] = useState('')
-  const [groupName, setGroupName] = useState('')
 
-
-  const rsvpOrCancelButton = (proposal) => {
-    if (proposal.user_proposal) {
-      return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>
-    } else {
-      return <button onClick={() => rsvpToProposal(proposal.id)}>RSVP for Proposal</button>
-    }
-  }
-
-  const cancelProposalButton = (proposal) => {
-    if (proposal.user_is_creator) {
-      return <button onClick={() => cancelProposal(proposal.id)}>Cancel Proposal</button>
-    }
-  }
+  // const cancelProposalButton = (proposal) => {
+  //   if (proposal.user_is_creator) {
+  //     return <button onClick={() => cancelProposal(proposal.id)}>Cancel Proposal</button>
+  //   }
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     createProposal({
+      token,
       title,
       description,
-      location,
       start_time: startTime,
       end_time: endTime,
-      group_name: groupName
+      user: currentUser,
     })
+    setToken('')
     setTitle('')
     setDescription('')
-    setLocation('')
     setStartTime('')
     setEndTime('')
-    setGroupName('')
   }
   
   return (
     <div>
       <h1>Proposals</h1>
       {proposals.map(proposal => (
-        <p><Link to={`proposals/${proposal.id}`}>{proposal.title}</Link> --- {rsvpOrCancelButton(proposal)} {proposal.user_is_creator && '--- '} {cancelProposalButton(proposal)}</p>
+        <p><Link to={`/api/proposals/${proposal.id}`}>{proposal.title}</Link> --- {'DAO:' && proposal.token && ' -- '}{'author:' && proposal.author} </p>
       ))}
       <h3>Add Proposal</h3>
       <form onSubmit={handleSubmit}>
+        <p>
+          <label htmlFor="token">DAO Token </label>
+          <input
+            type="text"
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+            name="token"
+          />
+        </p>
         <p>
           <label htmlFor="title">Title </label>
           <input
@@ -69,7 +68,7 @@ function ProposalsList({ proposals, groups, removeRsvpToProposal, cancelProposal
             name="description"
           />
         </p>
-        <p>
+        {/* <p>
           <label htmlFor="name"> Location </label>
           <input
             type="text"
@@ -77,7 +76,7 @@ function ProposalsList({ proposals, groups, removeRsvpToProposal, cancelProposal
             onChange={(e) => setLocation(e.target.value)}
             name="location"
           />
-        </p>
+        </p> */}
         <p>
           <label htmlFor="start_time"> Start Time </label>
           <input
@@ -96,7 +95,7 @@ function ProposalsList({ proposals, groups, removeRsvpToProposal, cancelProposal
             name="end_time"
           />
         </p>
-        <p>
+        {/* <p>
           <label htmlfor="group_name">Group Name </label>
           <input
             type="text"
@@ -104,11 +103,11 @@ function ProposalsList({ proposals, groups, removeRsvpToProposal, cancelProposal
             value={groupName}
             list="groups"
             onChange={(e) => setGroupName(e.target.value)}
-          />
-          <datalist id="groups">
+          /> */}
+          {/* <datalist id="groups">
             {groups.map(group => <option>{group.name}</option>)}
-          </datalist>
-        </p>
+          </datalist> */}
+        {/* </p> */}
         {" "}<button type="submit">Add Proposal</button>
       </form>
     </div>

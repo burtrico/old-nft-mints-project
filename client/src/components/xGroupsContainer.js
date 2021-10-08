@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import GroupsList from './GroupsList'
-import GroupDetail from './GroupDetail'
+import GroupsList from './xGroupsList'
+import GroupDetail from './xGroupDetail'
 
 function GroupsContainer() {
   const [groups, setGroups] = useState([]);
