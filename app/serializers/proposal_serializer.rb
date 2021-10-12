@@ -1,67 +1,81 @@
-class ProposalSerializer < ActiveModel::Serializer
-    attributes :id, :token
-    attributes :title, :description, :status
-    # attributes :votes_for
-    attributes :approve, :deny
-    attributes :start_date, :end_date
-    attribute :author
-  
-    has_many :votes
-   
-  
-    def author
-      object.user.username
-    end
+class ProposalIndexSerializer < ActiveModel::Serializer
+  attribute :author
+  has_many :votes
 
-    def user_is_creator
-      current_user == object.user
-    end
-  
-    def status
-      if object.active == true 
-        "Active" 
-      else
-        "Closed" 
-      end
-    end
-  
-    def votes_for
-      array = object.votes.map do |vote| 
-        if vote.vote_to_approve == true 
-          vote.count
-        else 
-          0
-        end 
-      end
-     array.map(&:to_i).reduce(0, :+)
-    end
-  
-    def votes_against
-      array = object.votes.map do |vote|  
-        if vote.vote_to_approve == false
-           vote.count
-        else 
-          0
-        end 
-      end
-     array.map(&:to_i).reduce(0, :+)
-    end
-  
-    def approve
-      num = votes_for.to_f / (votes_for + votes_against) * 100
-      # number_to_percentage(num, precision: 1)
-      '%.2f' % num
-    end
-  
-    def deny
-      num = votes_against.to_f / (votes_for + votes_against) * 100
-      '%.2f' % num
-    end
-  
-    
-  
-    # attributes :id, :token, :title, :description, :active, :approve, :deny, :start_date, :end_date
-    # has_one :user
-  
+
+  attributes :id, :token
+  attributes :title, :description, :status
+  attributes :votes_for
+  attributes :approve, :deny
+  attributes :start_date, :end_date
+  attribute :vote
+
+  attribute :user_is_creator
+  attribute :time
+
+
+  def author
+    object.user.username
   end
+
+
+
+  def user_is_creator
+    current_user == object.user
+  end
+
+  def vote
+    current_user.votes.find_by(proposal_id: object.id)
+  end
+
+  def status
+    if object.active == true 
+      "Active" 
+    else
+      "Closed" 
+    end
+  end
+
+  def votes_for
+    array = object.votes.map do |vote| 
+      if vote.vote_to_approve == true 
+        vote.count
+      else 
+        0
+      end 
+    end
+   array.map(&:to_i).reduce(0, :+)
+  end
+
+  def votes_against
+    array = object.votes.map do |vote|  
+      if vote.vote_to_approve == false
+         vote.count
+      else 
+        0
+      end 
+    end
+   array.map(&:to_i).reduce(0, :+)
+  end
+
+  def approve
+    num = votes_for.to_f / (votes_for + votes_against) * 100
+    # number_to_percentage(num, precision: 1)
+    '%.2f' % num
+  end
+
+  def deny
+    num = votes_against.to_f / (votes_for + votes_against) * 100
+    '%.2f' % num
+  end
+
+  def time
+    "From #{object.start_time.strftime('%A, %m/%d/%y at %I:%m %p')} to #{object.end_time.strftime('%A, %m/%d/%y at %I:%m %p')}"
+  end
+
   
+
+  # attributes :id, :token, :title, :description, :active, :approve, :deny, :start_date, :end_date
+  # has_one :user
+
+end

@@ -1,9 +1,10 @@
 class Api::UsersController < ApplicationController
+  skip_before_action :confirm_authentication
       
-      def index
-        users = User.all
-        render json: users
-      end
+      # def index
+      #   users = User.all
+      #   render json: users
+      # end
   
       def show
         if current_user
@@ -22,6 +23,21 @@ class Api::UsersController < ApplicationController
           render json: user.errors, status: :unprocessable_entity
         end
       end
+
+      # def update
+      #   user = User.find_by(id: params[:id])
+      #   if user.update(user_params)
+      #     render json: user, status: :ok
+      #   else
+      #     render json: user.errors, status: :unprocessable_entity
+      #   end
+      # end
+    
+      # def destroy
+      #   user = current_user.votes.find_by(id: params[:id])
+      #   user.destroy
+      #   render json: user, status: :ok
+      # end
 
 
     

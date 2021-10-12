@@ -1,77 +1,44 @@
-import { Route, Switch, Router } from 'react-router-dom';
-import Login from './components/Login';
-import React, { useState, useEffect } from 'react';
-import AuthenticatedApp from './AuthenticatedApp';
-
-
-
-
-
+import React, { useState, useEffect } from 'react'
+import AuthenticatedApp from './AuthenticatedApp'
+import UnauthenticatedApp from './UnauthenticatedApp'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
-
   const [currentUser, setCurrentUser] = useState(null)
+  const [authChecked, setAuthChecked] = useState(false)
 
-  
-  
+  useEffect(() => {
+    fetch('/api/me', {
+      credentials: 'include'
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json().then((user) => {
+            setCurrentUser(user)
+            setAuthChecked(true)
+          })
+        } else {
+          setAuthChecked(true)
+        }
+      })
+  }, [])
 
-
-  function handleUser(username) {
-    console.log("In App,", username )
-    const userBurt = {id: 1, username: "Burt", email: "burtrico@gmail.com", password: "1234"}
-    setCurrentUser(userBurt)
-    
-  }
-
-  ///// Fetch Gallery pics 
-
-
-  
-
-
-  //POST to Portfolio
-
-
-
-
-
-  
-
-  
-
-
-
+  if(!authChecked) { return <div></div>}
   return (
-    <div>
-     <Router>
-    <Switch>
-      <Route path="/proposals">
-        <AuthenticatedApp
+    <Router>
+      {currentUser ? (
+          <AuthenticatedApp
             setCurrentUser={setCurrentUser}
             currentUser={currentUser}
-        />
-      </Route>
-      {/* <Route path="/portfolio">
-        <Portfolio
-        renderUser={loggedUser}
           />
-      </Route>
-      <Route path="/reviews">
-        <Reviews
-        />
-      </Route> */}
-      <Route path="/">
-        <Login 
-          setCurrentUser={setCurrentUser}
-          currentUser={currentUser}
-          addUser={handleUser}
-        />
-      </Route>
-
-    </Switch>
+        ) : (
+          <UnauthenticatedApp
+            setCurrentUser={setCurrentUser}
+          />
+        )
+      }
     </Router>
-    </div>
-  );
+  )
 }
 
-export default App;
+export default App

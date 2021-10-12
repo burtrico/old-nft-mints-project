@@ -5,7 +5,7 @@ import ProposalDetail from './ProposalDetail'
 
 function ProposalsContainer({currentUser}) {
   const [proposals, setProposals] = useState([])
-  const [votePlaced, setVotePlaced] = useState(false)
+  // const [votePlaced, setVotePlaced] = useState(false)
   // const [groups, setGroups] = useState([])
   
   useEffect(() => {
@@ -17,7 +17,7 @@ function ProposalsContainer({currentUser}) {
         setProposals(proposals)
       console.log(proposals)
       })
-    // fetch(`/groups`, {
+    // fetch(`/api/groups`, {
     //   credentials: 'include'
     // })
     //   .then(res => res.json())
@@ -75,7 +75,7 @@ function ProposalsContainer({currentUser}) {
         proposal_id: proposalId,
         // Need to change this later:
         token: "lyra",
-        count: currentUser.count,
+        count: 17000,
         vote_to_approve: true
       })
     })
@@ -90,21 +90,24 @@ function ProposalsContainer({currentUser}) {
         // if the Proposal is the one we just voted on,
         // add a user_proposal property in state and set
         // it to the userProposal; if not, leave it as is
-        // const updatedProposals = proposals.map((proposal) => {
+        const updatedProposals = proposals.map((proposal) => {
 
-        //   if (proposal.id === proposalId) {
-        //     return {
-        //       ...proposal,
-        //       vote: userVote
-        //     }
-        //   } else {
-        //     return proposal
-        //   }
-        // })
-        console.log(userVote)
-        setVotePlaced(true)
-        // setProposals(updatedProposals)
+          if (proposal.id === proposalId) {
+            return {
+              ...proposal,
+              vote: userVote
+            }
+          } else {
+            return proposal
+          }
+        
+        
       })
+        // setVotePlaced(true)
+        console.log(userVote)
+        setProposals(updatedProposals)
+      
+  })
   }
 
 
@@ -121,7 +124,7 @@ function ProposalsContainer({currentUser}) {
         proposal_id: proposalId,
         // Need to change this later:
         token: "lyra",
-        count: currentUser.count,
+        count: 17000,
         vote_to_approve: false
       })
     })
@@ -146,6 +149,7 @@ function ProposalsContainer({currentUser}) {
             return proposal
           }
         })
+        console.log(userVote)
         setProposals(updatedProposals)
       })
   }
@@ -194,11 +198,9 @@ function ProposalsContainer({currentUser}) {
             return <ProposalDetail
               currentUser={currentUser}
               ProposalId={match.params.id}
-              Proposals={proposals}
               cancelProposal={cancelProposal}
               voteYesProposal={voteYesProposal}
               voteNoProposal={voteNoProposal}
-              votePlaced={votePlaced}
             />
           }}
         />

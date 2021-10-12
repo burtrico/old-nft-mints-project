@@ -1,11 +1,13 @@
 class ProposalIndexSerializer < ActiveModel::Serializer
   attributes :id, :token
   attributes :title, :description, :status
-  # attributes :votes_for
+  attributes :votes_for
   attributes :approve, :deny
   attributes :start_date, :end_date
+  attribute :vote
   attribute :author
-  # attribute :user_is_creator
+  attribute :user_is_creator
+  attribute :time
 
   has_many :votes
  
@@ -16,6 +18,10 @@ class ProposalIndexSerializer < ActiveModel::Serializer
 
   def user_is_creator
     current_user == object.user
+  end
+
+  def vote
+    current_user.votes.find_by(proposal_id: object.id)
   end
 
   def status
@@ -57,6 +63,10 @@ class ProposalIndexSerializer < ActiveModel::Serializer
   def deny
     num = votes_against.to_f / (votes_for + votes_against) * 100
     '%.2f' % num
+  end
+
+  def time
+    "From #{object.start_time.strftime('%A, %m/%d/%y at %I:%m %p')} to #{object.end_time.strftime('%A, %m/%d/%y at %I:%m %p')}"
   end
 
   

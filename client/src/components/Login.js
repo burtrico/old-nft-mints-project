@@ -1,55 +1,70 @@
 import React, { useState } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
-// import styled from 'styled-components'
+import { Redirect, Link } from 'react-router-dom'
 
-
-
-function Login(props) {
-
-    const [username, setUsername] = useState(" ")
-    console.log("useState Username is: ", username)
-
-
-    function handleSubmit(e) {
-        e.preventDefault()
-        
-        
-    }
-
-
-    return(
-        <div className="login-body">
-        <div className="login-page">
-            <div className="brand-logo"></div>
-            <h1 class="center">Investment Tracker</h1>
-        
-        
-        <form className="login" onSubmit={handleSubmit} >
-            <h2>Login </h2>
-            <label htmlFor="username"> Username </label>
-            <input className="input-field" type="text" 
-            id="username" 
+function Login({ setCurrentUser }) {
+  // const history = useHistory()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username, password})
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json().then(user => {
+            setCurrentUser(user)
+            // history.push('/api/proposals')
+          })
+        } else {
+          res.json().then(errors => {
+            console.error(errors)
+          })
+        }
+      })
+  }
+  return (
+    <div className="authForm">
+      <Redirect to="/api/" />
+      <form onSubmit={handleSubmit}>
+        <h1>Log In</h1>
+        <p>
+          <label 
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            name="username"
             value={username}
-            onChange ={ e => {
-            setUsername(e.target.value) 
-            //console.log("Username after Submit, " , username)
-            }}/>
-            <br></br>
-            <label htmlFor="password"> Password </label>
-            <input className="input-field" type="password" id="password" />
-            <NavLink to="/proposals">
-            <br></br>
-            <br></br>
-            <div>
-                <input type="submit" value="Enter" class="center"
-                onClick={props.addUser(username)}/>
-            </div>
-            </NavLink>
-        </form>
-        
-        </div>
-        </div>
-    )
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </p>
+        <p>
+          <label 
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name=""
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </p>
+        <p><button type="submit">Log In</button></p>
+        <p>-- or --</p>
+        <p><Link to="/api/signup">Sign Up</Link></p>
+      </form>
+    </div>
+  )
 }
 
-export default Login;
+export default Login

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 // import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-function ProposalDetail({ votePlaced, proposalId, proposals, voteYesProposal, voteNoProposal, cancelProposal, currentUser }) {
+function ProposalDetail({ votePlaced, proposalId, voteYesProposal, voteNoProposal, cancelProposal, currentUser }) {
   const [proposal, setProposal] = useState(null)
   // const history = useHistory();
 
@@ -44,8 +44,8 @@ function ProposalDetail({ votePlaced, proposalId, proposals, voteYesProposal, vo
   //   else {false}
   // }
 
-  const voteYesButton = (proposal) => {
-    if (votePlaced) {
+  const voteYesButton = () => {
+    if (proposal.vote) {
       // return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>
       return <p>Vote Confirmed</p>
     } else {
@@ -53,8 +53,8 @@ function ProposalDetail({ votePlaced, proposalId, proposals, voteYesProposal, vo
     }
   }
 
-  const voteNoButton = (proposal) => {
-    if (votePlaced) {
+  const voteNoButton = () => {
+    if (proposal.vote) {
       // return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>
       return <p>Vote Confirmed</p>
     } else {

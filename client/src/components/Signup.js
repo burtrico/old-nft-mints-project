@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Signup({ setCurrentUser }) {
-  const history = useHistory()
+  // const history = useHistory()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    fetch('/signup', {
+    fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -24,11 +24,11 @@ function Signup({ setCurrentUser }) {
         if (res.ok) {
           res.json().then(user => {
             setCurrentUser(user)
-            history.push('/users')
+            // history.push('/api/users')
           })
         } else {
           setCurrentUser({ username: "Burt" })
-          history.push('/users')
+          // history.push('/api/users')
           res.json().then(errors => {
             console.error(errors)
           })
@@ -80,7 +80,7 @@ function Signup({ setCurrentUser }) {
         </p>
         <p><button type="submit">Sign Up</button></p>
         <p>-- or --</p>
-        <p><Link to="/">Log In</Link></p>
+        <p><Link to="/api/">Log In</Link></p>
       </form>
     </div>
   )

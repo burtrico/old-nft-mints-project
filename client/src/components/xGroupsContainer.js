@@ -17,7 +17,7 @@ function GroupsContainer() {
 
   const leaveGroup = (groupId) => {
     let userGroupId = groups.find(group => group.id === groupId).user_group.id
-    return fetch(`/user_groups/${userGroupId}`, {
+    return fetch(`/api/user_groups/${userGroupId}`, {
       method: 'DELETE',
       credentials: 'include'
     })
@@ -39,7 +39,7 @@ function GroupsContainer() {
   }
 
   const joinGroup = (groupId) => {
-    return fetch('/user_groups', {
+    return fetch('/api/user_groups', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

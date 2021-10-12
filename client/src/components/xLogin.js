@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Redirect, useHistory, Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 function Login({ setCurrentUser }) {
   // const history = useHistory()
@@ -8,7 +8,7 @@ function Login({ setCurrentUser }) {
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    fetch('/login', {
+    fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

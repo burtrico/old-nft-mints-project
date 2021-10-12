@@ -37,9 +37,7 @@ function ProposalsList({ currentUser, proposals, cancelProposal, createProposal,
   return (
     <div>
       <h1>Proposals</h1>
-      {proposals.map(proposal => (
-        <p><Link to={`/api/proposals/${proposal.id}`}>{proposal.title}</Link> --- {'DAO:' && proposal.token && ' -- '}{'author:' && proposal.author} </p>
-      ))}
+      {proposals.map((proposal) => (<p><Link to={`/api/proposals/${proposal.id}`}>{proposal.title}</Link> --- DAO: {proposal.token} -- Author: {proposal.author} </p> ))}
       <h3>Add Proposal</h3>
       <form onSubmit={handleSubmit}>
         <p>

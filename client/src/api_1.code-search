@@ -1,0 +1,83 @@
+# Query: ="/
+# ContextLines: 1
+
+21 results - 8 files
+
+client/src/AuthenticatedApp.js:
+  24          <span>
+  25:           {/* <NavLink to="/api/groups">Groups</NavLink>{" - "} */}
+  26:           <NavLink to="/api/proposals">: Proposals :</NavLink>
+  27:           <NavLink to="/api/users">: Users :</NavLink>
+  28          </span>
+
+  31        <Switch>
+  32:       <Route path="/api/proposals">
+  33            <ProposalsContainer currentUser={currentUser} />
+  34          </Route>
+  35:         <Route path="/api/proposals">
+  36            <ProposalsContainer currentUser={currentUser} />
+  37          </Route>
+  38:         <Redirect to="/api/proposals"/>
+  39        </Switch>
+
+client/src/UnauthenticatedApp.js:
+   8      <Switch>
+   9:       <Route exact path="/api/">
+  10          <Login setCurrentUser={setCurrentUser} />
+  11        </Route>
+  12:       <Route exact path="/api/signup">
+  13          <Signup setCurrentUser={setCurrentUser}/>
+  14        </Route>
+  15:       <Redirect to="/api/" />
+  16      </Switch>
+
+client/src/xApp.js:
+  34      <span>
+  35:     {/* <NavLink to="/api/groups">Groups</NavLink>{" - "} */}
+  36:     <NavLink to="/api/proposals">: Proposals :</NavLink>
+  37    </span>
+
+  42        {/* currentUser ? ( */}
+  43:         <Route path="/api/proposals">
+  44            <AuthenticatedApp
+
+client/src/components/Login.js:
+  32      <div className="authForm">
+  33:       <Redirect to="/api/" />
+  34        <form onSubmit={handleSubmit}>
+
+  63          <p>-- or --</p>
+  64:         <p><Link to="/api/signup">Sign Up</Link></p>
+  65        </form>
+
+client/src/components/ProposalsContainer.js:
+  178            exact
+  179:           path="/api/proposals"
+  180          >
+
+  191            exact
+  192:           path="/api/proposals/:id"
+  193            render={({ match }) => {
+
+client/src/components/Signup.js:
+  82          <p>-- or --</p>
+  83:         <p><Link to="/api/">Log In</Link></p>
+  84        </form>
+
+client/src/components/xGroupsContainer.js:
+   99            exact
+  100:           path="/api/groups"
+  101          >
+
+  110            exact
+  111:           path="/api/groups/:id"
+  112            render={({ match }) => {
+
+client/src/components/xLogin.js:
+  32      <div className="authForm">
+  33:       <Redirect to="/api/" />
+  34        <form onSubmit={handleSubmit}>
+
+  63          <p>-- or --</p>
+  64:         <p><Link to="/api/signup">Sign Up</Link></p>
+  65        </form>
