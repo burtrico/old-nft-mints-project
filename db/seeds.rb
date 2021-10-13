@@ -13,7 +13,7 @@ user4 = User.create(username: "Marc", email: "marc.majcher@flatironschool.com", 
 user5 = User.create(username: "Shivang", email: "shivang.dave@flatironschool.com", password: "1234")
 user6 = User.create(username: "Ray", email: "rayisdabomb@gmail.com", password: "1234")
 
-proposals1 = Proposal.create(token: "lyra", title: "Establish the Lyra DAO", 
+proposals1 = Proposal.create(token: "LYRA", title: "Establish the Lyra DAO", 
 description: "Establish the first Lyra DAO with a multi-sig of 5 council members.", 
  active: true,
 #  Time.now.strftime("%m/%d/%Y %H:%M")
@@ -21,12 +21,12 @@ description: "Establish the first Lyra DAO with a multi-sig of 5 council members
 end_date: "11/06/2021 12:00",
 user: user1 )
 
-vote1 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals1.id, token: "lyra", count: 2500, vote_to_approve: true)
-vote2 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals1.id, token: "lyra", count: 3500, vote_to_approve: true)
-vote3 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals1.id, token: "lyra", count: 150, vote_to_approve: false)
-vote4 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals1.id, token: "lyra", count: 1200, vote_to_approve: true)
+vote1 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals1.id, token: "LYRA", count: 2500, vote_to_approve: true)
+vote2 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals1.id, token: "LYRA", count: 3500, vote_to_approve: true)
+vote3 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals1.id, token: "LYRA", count: 150, vote_to_approve: false)
+vote4 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals1.id, token: "LYRA", count: 1200, vote_to_approve: true)
 
-proposals2 = Proposal.create(token: "snx", title: "Reduce the number of the Synthetix DAO's treasury multi-sigs", 
+proposals2 = Proposal.create(token: "SNX", title: "Reduce the number of the Synthetix DAO's treasury multi-sigs", 
   description: "Reduce the number of Synthetix DAO's treasury multi-sigs from 7 to 3 members.", 
    active: true,
   #  Time.now.strftime("%m/%d/%Y %H:%M")
@@ -34,12 +34,12 @@ proposals2 = Proposal.create(token: "snx", title: "Reduce the number of the Synt
   end_date: "11/10/2021 12:30",
   user: user3 )
 
-  vote5 = Vote.create(user: user1, user_id: user1.id, proposal_id: proposals2.id, token: "snx", count: 2100, vote_to_approve: false)
-  vote6 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals2.id, token: "snx", count: 11000, vote_to_approve: false)
-  vote7 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals2.id, token: "snx", count: 100000, vote_to_approve: true)
-  vote8 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals2.id, token: "snx", count: 27000, vote_to_approve: false)
-  vote9 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals2.id, token: "snx", count: 58000, vote_to_approve: false)
-  vote10 = Vote.create(user: user6, user_id: user6.id, proposal_id: proposals2.id, token: "snx", count: 18000, vote_to_approve: false)
+  vote5 = Vote.create(user: user1, user_id: user1.id, proposal_id: proposals2.id, token: "SNX", count: 2100, vote_to_approve: false)
+  vote6 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals2.id, token: "SNX", count: 11000, vote_to_approve: false)
+  vote7 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals2.id, token: "SNX", count: 100000, vote_to_approve: true)
+  vote8 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals2.id, token: "SNX", count: 27000, vote_to_approve: false)
+  vote9 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals2.id, token: "SNX", count: 58000, vote_to_approve: false)
+  vote10 = Vote.create(user: user6, user_id: user6.id, proposal_id: proposals2.id, token: "SNX", count: 18000, vote_to_approve: false)
 
  # group = Group.create(name: 'Online Software Engineering 071921', location: 'online')
 

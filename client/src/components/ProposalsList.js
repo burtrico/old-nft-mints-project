@@ -8,8 +8,8 @@ function ProposalsList({ currentUser, proposals, cancelProposal, createProposal,
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   // const [location, setLocation] = useState('')
-  const [startTime, setStartTime] = useState(now.toISOString().slice(0, 16))
-  const [endTime, setEndTime] = useState('')
+  const [startDate, setStartDate] = useState(now.toISOString().slice(0, 16))
+  const [endDate, setEndDate] = useState('')
 
   // const cancelProposalButton = (proposal) => {
   //   if (proposal.user_is_creator) {
@@ -23,21 +23,23 @@ function ProposalsList({ currentUser, proposals, cancelProposal, createProposal,
       token,
       title,
       description,
-      start_time: startTime,
-      end_time: endTime,
-      user: currentUser,
+      start_date: startDate,
+      end_date: endDate,
+      user: currentUser
     })
     setToken('')
     setTitle('')
     setDescription('')
-    setStartTime('')
-    setEndTime('')
+    setStartDate('')
+    setEndDate('')
   }
   
+  console.log(proposals)
+
   return (
     <div>
       <h1>Proposals</h1>
-      {proposals.map((proposal) => (<p><Link to={`/api/proposals/${proposal.id}`}>{proposal.title}</Link> --- DAO: {proposal.token} -- Author: {proposal.author} </p> ))}
+      {proposals.map(mproposal => (<p><Link to={`/api/proposals/${mproposal.id}`}>{mproposal.title}</Link> --- DAO: {mproposal.token} -- Author: {mproposal.author} </p> ))}
       <h3>Add Proposal</h3>
       <form onSubmit={handleSubmit}>
         <p>
@@ -76,21 +78,21 @@ function ProposalsList({ currentUser, proposals, cancelProposal, createProposal,
           />
         </p> */}
         <p>
-          <label htmlFor="start_time"> Start Time </label>
+          <label htmlFor="start_date"> Start Date </label>
           <input
             type="datetime-local"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            name="start_time"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            name="start_date"
           />
         </p>
         <p>
-          <label htmlFor="end_time"> End Time </label>
+          <label htmlFor="end_date"> End Date </label>
           <input
             type="datetime-local"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            name="end_time"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            name="end_date"
           />
         </p>
         {/* <p>

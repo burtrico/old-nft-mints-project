@@ -9,7 +9,7 @@ function ProposalsContainer({currentUser}) {
   // const [groups, setGroups] = useState([])
   
   useEffect(() => {
-    fetch(`/api/proposals`, {
+    fetch(`/proposals`, {
       credentials: 'include'
     })
       .then(res => res.json())
@@ -51,7 +51,7 @@ function ProposalsContainer({currentUser}) {
   // }
 
   const cancelProposal = (proposalId) => {
-    return fetch(`/api/Proposals/${proposalId}`, {
+    return fetch(`/proposals/${proposalId}`, {
       method: "DELETE",
       credentials: 'include'
     })
@@ -64,7 +64,7 @@ function ProposalsContainer({currentUser}) {
   }
 
   const voteYesProposal = (proposalId) => {
-    return fetch('/api/votes', {
+    return fetch('/votes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ function ProposalsContainer({currentUser}) {
         user_id: currentUser.id,
         proposal_id: proposalId,
         // Need to change this later:
-        token: "lyra",
+        token: "LYRA",
         count: 17000,
         vote_to_approve: true
       })
@@ -113,7 +113,7 @@ function ProposalsContainer({currentUser}) {
 
 
   const voteNoProposal = (proposalId) => {
-    return fetch('/api/votes', {
+    return fetch('/votes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ function ProposalsContainer({currentUser}) {
         user_id: currentUser.id,
         proposal_id: proposalId,
         // Need to change this later:
-        token: "lyra",
+        token: "LYRA",
         count: 17000,
         vote_to_approve: false
       })
@@ -155,7 +155,7 @@ function ProposalsContainer({currentUser}) {
   }
 
   const createProposal = (formData) => {
-    return fetch("/api/proposals", {
+    return fetch("/proposals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -183,7 +183,7 @@ function ProposalsContainer({currentUser}) {
           path="/api/proposals"
         >
           <ProposalsList
-            Proposals={proposals}
+            proposals={proposals}
             currentUser={currentUser}
             cancelProposal={cancelProposal}
             // removeRsvpToProposal={removeRsvpToProposal}

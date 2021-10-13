@@ -66,7 +66,7 @@ class ProposalIndexSerializer < ActiveModel::Serializer
   end
 
   def time
-    "From #{object.start_time.strftime('%A, %m/%d/%y at %I:%m %p')} to #{object.end_time.strftime('%A, %m/%d/%y at %I:%m %p')}"
+    "From #{object.start_date.strftime('%A, %m/%d/%y at %I:%m %p')} to #{object.end_date.strftime('%A, %m/%d/%y at %I:%m %p')}"
   end
 
   

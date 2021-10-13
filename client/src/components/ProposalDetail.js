@@ -6,6 +6,8 @@ function ProposalDetail({ votePlaced, proposalId, voteYesProposal, voteNoProposa
   const [proposal, setProposal] = useState(null)
   // const history = useHistory();
 
+console.log('Proposal ID:',proposalId)
+
   const fetchProposalCallback = useCallback(
     () => {
       fetch(`/api/proposals/${proposalId}`, {
@@ -86,6 +88,8 @@ function ProposalDetail({ votePlaced, proposalId, voteYesProposal, voteNoProposa
   //   }
   // }
   
+  console.log('LOADED:',proposal)
+
   if(!proposal) { return <div></div>}
   return (
     <div>
