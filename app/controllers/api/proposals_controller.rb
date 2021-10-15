@@ -16,7 +16,7 @@ class Api::ProposalsController < ApplicationController
     
       def create
         proposal = Proposal.new(proposal_params)
-        proposal = current_user.created_proposals.new(proposal_params)
+        # proposal = current_user.created_proposals.new(proposal_params)
         if proposal.save
           render json: proposal, status: :created
         else
@@ -54,7 +54,7 @@ class Api::ProposalsController < ApplicationController
       private
     
       def proposal_params
-        params.permit(:token, :title, :description, :active, :start_date, :end_date, :username)
+        params.permit(:token, :title, :description, :active, :start_date, :end_date, :user)
       end
 
       # def set_proposal

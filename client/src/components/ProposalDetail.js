@@ -110,7 +110,7 @@ console.log('Proposal ID:',proposalId)
       <br/>
       <ul>
         {proposal.votes.map(vote => (
-          <li>{vote.user.username} -- {vote.vote_to_approve ? "APPROVE" : "DENY"} -- {vote.count} token votes</li>
+          <li key={vote.id}>{vote.user.username} -- {vote.vote_to_approve ? "APPROVE" : "DENY"} -- {vote.count} token votes</li>
         ))}
       </ul>
 
