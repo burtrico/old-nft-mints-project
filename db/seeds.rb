@@ -21,10 +21,10 @@ description: "Establish the first Lyra DAO with a multi-sig of 5 council members
 end_date: "11/06/2021 12:00",
 user: user1 )
 
-vote1 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals1.id, token: "LYRA", count: 2500, vote_to_approve: true)
-vote2 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals1.id, token: "LYRA", count: 3500, vote_to_approve: true)
-vote3 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals1.id, token: "LYRA", count: 150, vote_to_approve: false)
-vote4 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals1.id, token: "LYRA", count: 1200, vote_to_approve: true)
+vote1 = Vote.create(user_id: user5.id, proposal_id: proposals1.id, token: "LYRA", count: 2500, vote_to_approve: true)
+vote2 = Vote.create(user_id: user2.id, proposal_id: proposals1.id, token: "LYRA", count: 3500, vote_to_approve: true)
+vote3 = Vote.create(user_id: user3.id, proposal_id: proposals1.id, token: "LYRA", count: 150, vote_to_approve: false)
+vote4 = Vote.create(user_id: user4.id, proposal_id: proposals1.id, token: "LYRA", count: 1200, vote_to_approve: true)
 
 proposals2 = Proposal.create(token: "SNX", title: "Reduce the number of the Synthetix DAO's treasury multi-sigs", 
   description: "Reduce the number of Synthetix DAO's treasury multi-sigs from 7 to 3 members.", 
@@ -34,12 +34,12 @@ proposals2 = Proposal.create(token: "SNX", title: "Reduce the number of the Synt
   end_date: "11/10/2021 12:30",
   user: user3 )
 
-  vote5 = Vote.create(user: user1, user_id: user1.id, proposal_id: proposals2.id, token: "SNX", count: 2100, vote_to_approve: false)
-  vote6 = Vote.create(user: user2, user_id: user2.id, proposal_id: proposals2.id, token: "SNX", count: 11000, vote_to_approve: false)
-  vote7 = Vote.create(user: user3, user_id: user3.id, proposal_id: proposals2.id, token: "SNX", count: 100000, vote_to_approve: true)
-  vote8 = Vote.create(user: user4, user_id: user4.id, proposal_id: proposals2.id, token: "SNX", count: 27000, vote_to_approve: false)
-  vote9 = Vote.create(user: user5, user_id: user5.id, proposal_id: proposals2.id, token: "SNX", count: 58000, vote_to_approve: false)
-  vote10 = Vote.create(user: user6, user_id: user6.id, proposal_id: proposals2.id, token: "SNX", count: 18000, vote_to_approve: false)
+  vote5 = Vote.create(user_id: user1.id, proposal_id: proposals2.id, token: "SNX", count: 2100, vote_to_approve: false)
+  vote6 = Vote.create(user_id: user2.id, proposal_id: proposals2.id, token: "SNX", count: 11000, vote_to_approve: false)
+  vote7 = Vote.create(user_id: user3.id, proposal_id: proposals2.id, token: "SNX", count: 100000, vote_to_approve: true)
+  vote8 = Vote.create(user_id: user4.id, proposal_id: proposals2.id, token: "SNX", count: 27000, vote_to_approve: false)
+  vote9 = Vote.create(user_id: user5.id, proposal_id: proposals2.id, token: "SNX", count: 58000, vote_to_approve: false)
+  vote10 = Vote.create(user_id: user6.id, proposal_id: proposals2.id, token: "SNX", count: 18000, vote_to_approve: false)
 
  # group = Group.create(name: 'Online Software Engineering 071921', location: 'online')
 
