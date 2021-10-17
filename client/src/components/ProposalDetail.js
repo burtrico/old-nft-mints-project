@@ -114,7 +114,6 @@ console.log('Proposal ID:',proposalId)
         ))}
       </ul>
 
-
     </div>
   )
 }
