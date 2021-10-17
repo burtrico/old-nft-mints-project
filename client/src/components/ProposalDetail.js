@@ -46,6 +46,8 @@ console.log('Proposal ID:',proposalId)
   //   else {false}
   // }
 
+console.log("SEE VOTES HERE:",proposal.votes)
+
   const voteYesButton = () => {
     if (proposal.vote) {
       // return <button onClick={() => removeRsvpToProposal(proposal.id)}>Cancel RSVP</button>

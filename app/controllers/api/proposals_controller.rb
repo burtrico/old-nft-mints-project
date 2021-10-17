@@ -3,8 +3,7 @@ class Api::ProposalsController < ApplicationController
   # before_action :authorize_user, only: [:update, :destroy]
 
       def index
-        proposals = Proposal.all
-        # .includes(:votes)
+        proposals = Proposal.all.includes(:votes)
         render json: proposals, each_serializer: ProposalIndexSerializer
       end
     
