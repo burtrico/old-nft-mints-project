@@ -18,6 +18,7 @@ function AuthenticatedApp({ currentUser, setCurrentUser }) {
         }
       })
   }
+  
   return (
     <div className="App">
       <nav>
