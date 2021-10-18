@@ -1,0 +1,2 @@
+class NftContract < ApplicationRecord
+end

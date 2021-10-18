@@ -1,4 +1,4 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :email, :wallet_address
-  # :bio
+  attributes :id, :ens_domain, :wallet_address
+
 end

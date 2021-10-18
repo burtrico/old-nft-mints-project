@@ -6,40 +6,26 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user1 = User.create(username: "Burt", email: "burtrico@gmail.com", password: "1234")
-user2 = User.create(username: "Dakota", email: "dakota@flatironschool.com", password: "1234")
-user3 = User.create(username: "Sam", email: "sam.boahen@flatironschool.com", password: "1234")
-user4 = User.create(username: "Marc", email: "marc.majcher@flatironschool.com", password: "1234")
-user5 = User.create(username: "Shivang", email: "shivang.dave@flatironschool.com", password: "1234")
-user6 = User.create(username: "Ray", email: "rayisdabomb@gmail.com", password: "1234")
+user1 = User.create(ens_domain: "burt.eth", wallet_address: "vjb23b32kbe23hbk323bwklh7l33lb1lzklc8d7rm6", password: "1234")
+user2 = User.create(ens_domain: "dakota.eth", wallet_address: "nnin2323kn2jnbb2k3on3n3noo23de394dsc8a5sp5", password: "1234")
+user3 = User.create(ens_domain: "sam.eth", wallet_address: "0f9exn71xnvmfv8ed839485mskof6i3fjso6sx8f74", password: "1234")
+user4 = User.create(ens_domain: "joe.eth", wallet_address: "ksk73mci95k6k7n89nm8k4kbwvef5h5gv5j6k69hj1", password: "1234")
+user5 = User.create(ens_domain: "ray.eth", wallet_address: "akd290p93jhjb3k83j3bjfm2k4m4n5kb505jgv2k7j", password: "1234")
+user6 = User.create(ens_domain: "snufkin.eth", wallet_address: "d3nks9s7f8g6gf4d4sjsks52m2l3f74ndjd3w863y2", password: "1234")
 
-proposals1 = Proposal.create(token: "LYRA", title: "Establish the Lyra DAO", 
-description: "Establish the first Lyra DAO with a multi-sig of 5 council members.", 
- active: true,
-#  Time.now.strftime("%m/%d/%Y %H:%M")
-  start_date: "10/06/2021 14:30",
-end_date: "11/06/2021 12:00",
-user: user1 )
+nft_contract1 = NftContract.create()
 
-vote1 = Vote.create(user_id: user5.id, proposal_id: proposals1.id, token: "LYRA", count: 2500, vote_to_approve: true)
-vote2 = Vote.create(user_id: user2.id, proposal_id: proposals1.id, token: "LYRA", count: 3500, vote_to_approve: true)
-vote3 = Vote.create(user_id: user3.id, proposal_id: proposals1.id, token: "LYRA", count: 150, vote_to_approve: false)
-vote4 = Vote.create(user_id: user4.id, proposal_id: proposals1.id, token: "LYRA", count: 1200, vote_to_approve: true)
+# Proposal.create(token: "LYRA", title: "Establish the Lyra DAO", 
+# description: "Establish the first Lyra DAO with a multi-sig of 5 council members.", 
+#  active: true,
+# #  Time.now.strftime("%m/%d/%Y %H:%M")
+#   start_date: "10/06/2021 14:30",
+# end_date: "11/06/2021 12:00",
+# user: user1 )
 
-proposals2 = Proposal.create(token: "SNX", title: "Reduce the number of the Synthetix DAO's treasury multi-sigs", 
-  description: "Reduce the number of Synthetix DAO's treasury multi-sigs from 7 to 3 members.", 
-   active: true,
-  #  Time.now.strftime("%m/%d/%Y %H:%M")
-    start_date: "10/10/2021 14:45",
-  end_date: "11/10/2021 12:30",
-  user: user3 )
+nft1 = Nft.create(user_id: user1.id, nft_contract_id: nft_contract1.id, name: "Snufkin #1", 
+  )
 
-  vote5 = Vote.create(user_id: user1.id, proposal_id: proposals2.id, token: "SNX", count: 2100, vote_to_approve: false)
-  vote6 = Vote.create(user_id: user2.id, proposal_id: proposals2.id, token: "SNX", count: 11000, vote_to_approve: false)
-  vote7 = Vote.create(user_id: user3.id, proposal_id: proposals2.id, token: "SNX", count: 100000, vote_to_approve: true)
-  vote8 = Vote.create(user_id: user4.id, proposal_id: proposals2.id, token: "SNX", count: 27000, vote_to_approve: false)
-  vote9 = Vote.create(user_id: user5.id, proposal_id: proposals2.id, token: "SNX", count: 58000, vote_to_approve: false)
-  vote10 = Vote.create(user_id: user6.id, proposal_id: proposals2.id, token: "SNX", count: 18000, vote_to_approve: false)
 
  # group = Group.create(name: 'Online Software Engineering 071921', location: 'online')
 
@@ -65,5 +51,5 @@ proposals2 = Proposal.create(token: "SNX", title: "Reduce the number of the Synt
 #    "active": false,
 #     "start_date": "10/06/2021 14:30",
 #   "end_date": "11/06/2021 12:00",
-#   "user": {"username": "Dakota", "email": "dakota@flatironschool.com"} }
+#   "user": {"ens_domain": "Dakota", "wallet_address": "dakota@flatironschool.com"} }
 

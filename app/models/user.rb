@@ -1,9 +1,8 @@
 class User < ApplicationRecord
-    has_many :votes, dependent: :destroy
-    has_many :proposals, through: :votes
+    has_many :nfts, dependent: :destroy
+    has_many :nft_contracts, through: :nfts
 
-    validates :username, presence: true, uniqueness: true
-    validates :email, uniqueness: true, allow_blank: true
-    # , uniqueness: true
+    validates :ens_domain, presence: true, uniqueness: true
+
     has_secure_password
 end

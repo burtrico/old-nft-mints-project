@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :nft_contracts
+  resources :nfts
   namespace :api do 
     resources :proposals, only: [:index, :show, :create, :update, :destroy]
     # resources :groups, only: [:index, :show, :create]

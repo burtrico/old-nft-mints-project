@@ -1,0 +1,2 @@
+class NftContractsController < ApplicationController
+end
